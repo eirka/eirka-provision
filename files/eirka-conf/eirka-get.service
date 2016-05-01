@@ -1,0 +1,19 @@
+[Unit]
+Description=Eirka Get
+Wants=redis.service
+Requires=nginx.service mysql.service
+After=nginx.service mysql.service redis.service
+
+[Service]
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=full
+
+User=www-data
+RuntimeDirectory=eirka
+Environment=GIN_MODE=release
+ExecStart=/data/pram/bin/eirka-get
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

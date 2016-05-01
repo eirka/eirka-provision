@@ -1,0 +1,40 @@
+---
+- hosts: all
+  remote_user: root
+
+  tasks:
+    - copy: src=files/nginx-conf/ dest=/etc/nginx/conf.d/
+      notify: nginx_restart
+    - copy: src=files/cloudflare.pem dest=/etc/nginx/ssl/cloudflare.pem
+      notify: nginx_restart
+    - command: openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj "/C=US/ST=New York/L=New York City/O=IT/CN={{ ansible_fqdn }}" -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt creates=/etc/nginx/ssl/nginx.crt
+      notify: nginx_restart
+
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-index creates=/data/pram/bin/eirka-index
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-get creates=/data/pram/bin/eirka-get
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-post creates=/data/pram/bin/eirka-post
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-admin creates=/data/pram/bin/eirka-admin
+
+    - template: src=files/pram.conf.j2 dest=/etc/pram/pram.conf
+
+    - mysql_db: name=eirka state=present
+      notify:
+        - schema_import
+        - service_activation
+
+    - mysql_user: name=pram password="{{ lookup('password', '/tmp/' + ansible_fqdn + '/db_password') }}" host=localhost priv="eirka.*:SELECT,INSERT,UPDATE,DELETE" state=present
+
+  handlers:
+    - name: nginx_restart
+      service: name=nginx state=restarted
+
+    - name: schema_import
+      mysql_db: name=eirka state=import target=/data/pram/src/github.com/eirka/eirka-post/eirka.sql
+
+    - name: service_activation
+      service: name={{ item }} state=started enabled=yes
+      with_items:
+        - eirka-index
+        - eirka-get
+        - eirka-post
+        - eirka-admin

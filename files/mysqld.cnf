@@ -1,0 +1,57 @@
+[mysqld]
+
+# GENERAL #
+server-id                      = 23
+user                           = mysql
+default-storage-engine         = InnoDB
+socket                         = /var/run/mysqld/mysqld.sock
+pid-file                       = /var/run/mysqld/mysqld.pid
+bind-address                   = 127.0.0.1
+port                           = 3306
+performance-schema             = 0
+
+# SAFETY #
+max-allowed-packet             = 16M
+max-connect-errors             = 1000000
+skip-name-resolve
+skip-external-locking
+sysdate-is-now                 = 1
+innodb                         = FORCE
+innodb-strict-mode             = 1
+
+# DATA STORAGE #
+basedir		                     = /usr
+datadir                        = /var/lib/percona-server
+tmpdir                         = /tmp
+
+# BINARY LOGGING #
+log-bin                        = /var/lib/percona-server/mysql-bin
+expire-logs-days               = 7
+sync-binlog                    = 1
+
+# CACHES AND LIMITS #
+key-buffer-size                = 32M
+tmp-table-size                 = 32M
+max-heap-table-size            = 32M
+query-cache-type               = 0
+query-cache-size               = 0
+max-connections                = 80
+thread-cache-size              = 16
+open-files-limit               = 65535
+table-definition-cache         = 1024
+table-open-cache               = 1000
+
+# INNODB #
+innodb-flush-method            = O_DIRECT
+innodb-log-files-in-group      = 2
+innodb-log-file-size           = 128M
+innodb-flush-log-at-trx-commit = 1
+innodb-file-per-table          = 1
+innodb-buffer-pool-size        = 128M
+innodb-buffer-pool-instances   = 1
+
+# LOGGING #
+log-error                      = /var/log/mysql/error.log
+log-queries-not-using-indexes  = 1
+slow-query-log                 = 1
+slow-query-log-file            = /var/lib/percona-server/mysql-slow.log

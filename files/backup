@@ -1,0 +1,22 @@
+#!/bin/bash
+# creates a mysql backup
+#
+# CREATE USER 'backups'@'localhost';
+# GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'backups'@'localhost';
+# FLUSH PRIVILEGES;
+#
+# restore: innobackupex --copy-back /data/backups/whatever
+
+# timestamp
+DATE=$(date +"%Y%m%d")
+# directory
+DIR="/data/backups/$DATE"
+# archive name
+TAR="/data/backups/backup-$DATE.tar.gz"
+
+set -eu
+innobackupex --user=backup --no-timestamp $DIR
+innobackupex --apply-log /data/backups/$DATE
+nice -n 10 tar -cvzf $TAR $DIR
+rm -rf $DIR
+find /data/backups -mtime +7 -delete

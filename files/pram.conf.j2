@@ -1,0 +1,52 @@
+{
+    "Get": {
+        "Host": "127.0.0.1",
+        "Port": 5010,
+        "DatabaseMaxIdle": 10,
+        "DatabaseMaxConnections": 40,
+        "RedisMaxIdle": 30,
+        "RedisMaxConnections": 60
+    },
+    "Post": {
+        "Host": "127.0.0.1",
+        "Port": 5015,
+        "DatabaseMaxIdle": 2,
+        "DatabaseMaxConnections": 5,
+        "RedisMaxIdle": 2,
+        "RedisMaxConnections": 5
+    },
+    "Admin": {
+        "Host": "127.0.0.1",
+        "Port": 5020,
+        "DatabaseMaxIdle": 2,
+        "DatabaseMaxConnections": 5,
+        "RedisMaxIdle": 2,
+        "RedisMaxConnections": 5
+    },
+    "Index": {
+        "Host": "127.0.0.1",
+        "Port": 5005,
+        "DatabaseMaxIdle": 2,
+        "DatabaseMaxConnections": 5
+    },
+    "Directories": {
+        "ImageDir": "/data/prim/src/",
+        "ThumbnailDir": "/data/prim/thumb/",
+        "AssetsDir": "/data/prim/assets"
+    },
+    "CORS": {},
+    "Database": {
+        "Host": "/run/mysqld/mysqld.sock",
+        "Protocol": "unix",
+        "User": "pram",
+        "Password": "{{ lookup('password', '/tmp/' + ansible_fqdn + '/db_password') }}",
+        "Database": "eirka"
+    },
+    "Redis": {
+        "Host": "/run/redis/redis.sock",
+        "Protocol": "unix"
+    },
+    "Session": {
+        "Secret": "{{ lookup('password', '/tmp/' + ansible_fqdn + '/jwt_secret') }}"
+    }
+}

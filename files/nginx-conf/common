@@ -1,0 +1,26 @@
+index index.php index.html;
+
+try_files $uri $uri/ =404;
+
+error_page 404 /404.html;
+error_page 403 /403.html;
+error_page 500 /500.html;
+
+location ~* \.(?:html|htm)$ {
+  expires -1;
+  access_log off;
+}
+
+location = /favicon.ico { access_log off; log_not_found off; }
+location = /robots.txt { access_log off; log_not_found off; }
+location ~ /\. { deny all; access_log off; log_not_found off; }
+
+location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+  expires 1y;
+  access_log off;
+
+  open_file_cache max=1000 inactive=60m;
+  open_file_cache_valid 60s;
+  open_file_cache_min_uses 2;
+  open_file_cache_errors on;
+}

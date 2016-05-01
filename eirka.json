@@ -1,0 +1,36 @@
+{
+    "builders": [{
+        "type": "digitalocean",
+        "api_token": "",
+        "image": "ubuntu-16-04-x64",
+        "region": "nyc3",
+        "size": "1gb",
+        "snapshot_name": "eirka-template-{{timestamp}}"
+    }],
+    "provisioners": [{
+        "type": "shell",
+        "inline": ["sleep 60"]
+    }, {
+        "type": "shell",
+        "environment_vars": ["DEBIAN_FRONTEND=noninteractive"],
+        "inline": [
+            "apt-get update",
+            "apt-get -y upgrade",
+            "apt-get -y install ffmpeg nginx redis-server imagemagick git wget python-simplejson python-mysqldb percona-server-server percona-xtrabackup",
+            "timedatectl set-timezone UTC"
+        ]
+    }, {
+        "type": "shell",
+        "inline": [
+            "systemctl disable lxcfs",
+            "systemctl disable lxd-containers",
+            "systemctl disable open-iscsi",
+            "systemctl disable iscsid",
+            "systemctl disable mdadm",
+            "systemctl disable lvm2-monitor"
+        ]
+    }, {
+        "type": "ansible",
+        "playbook_file": "base.yml"
+    }]
+}

@@ -1,0 +1,56 @@
+---
+- hosts: all
+  remote_user: root
+
+  tasks:
+    - user: name=www-data state=present
+
+    - service: name={{ item }} state=started enabled=yes
+      with_items:
+        - nginx
+        - redis
+        - mysql
+
+    - file: path={{ item }} state=directory
+      with_items:
+        - /etc/nginx/ssl
+        - /etc/pram
+        - /data/pram
+        - /data/prim/src
+        - /data/prim/thumb
+        - /data/prim/assets/logo
+        - /data/prim/assets/banners
+        - /data/prim/assets/prim
+        - /data/prim/assets/styles
+        - /data/prim/assets/includes
+        - /data/backups
+
+    - file: path=/data/prim/ owner=www-data group=www-data recurse=yes
+
+    - copy: src=files/limits.conf dest=/etc/security/limits.conf
+    - copy: src=files/redis.conf dest=/etc/redis/redis.conf
+    - copy: src=files/nginx.conf dest=/etc/nginx/nginx.conf
+    - copy: src=files/mysqld.cnf dest=/etc/mysql/percona-server.conf.d/mysqld.cnf
+    - copy: src=files/backup dest=/etc/cron.daily/backup
+    - copy: src=files/prim/ dest=/data/prim/assets/includes/
+
+    - copy: src={{ item }} dest=/etc/systemd/system/
+      with_items:
+        - files/eirka-conf/eirka-index.service
+        - files/eirka-conf/eirka-get.service
+        - files/eirka-conf/eirka-post.service
+        - files/eirka-conf/eirka-admin.service
+
+    - ufw: rule=limit name="OpenSSH"
+    - ufw: rule=allow name="Nginx Full"
+    - ufw: state=enabled
+
+    - file: path=/usr/local/go/ state=absent
+    - file: path=/root/go.tar.gz state=absent
+    - get_url: url=https://storage.googleapis.com/golang/go1.6.2.linux-amd64.tar.gz dest=/root/go.tar.gz
+    - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
+    - lineinfile: dest=/etc/environment state=present line="export GOROOT=/usr/local/go"
+    - lineinfile: dest=/etc/environment state=present line="export GOPATH=/data/pram/"
+    - lineinfile: dest=/root/.profile state=present line="export PATH=$PATH:$GOROOT/bin"
+
+    - mysql_user: name=backup password='' host=localhost priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
