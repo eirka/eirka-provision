@@ -8,10 +8,13 @@ PrivateTmp=yes
 ProtectHome=yes
 ProtectSystem=full
 
+PIDFile=/run/eirka/eirka-index.pid
+
 User=www-data
 RuntimeDirectory=eirka
 Environment=GIN_MODE=release
 ExecStart=/data/pram/bin/eirka-index
+ExecReload=/bin/kill -USR2 $MAINPID
 Restart=on-failure
 
 [Install]
