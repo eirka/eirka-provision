@@ -40,6 +40,7 @@
         - files/eirka-conf/eirka-get.service
         - files/eirka-conf/eirka-post.service
         - files/eirka-conf/eirka-admin.service
+      notify: reload_systemd
 
     - ufw: rule=limit name="OpenSSH"
     - ufw: rule=allow name="Nginx Full"
@@ -54,3 +55,7 @@
     - lineinfile: dest=/root/.profile state=present line="export PATH=$PATH:$GOROOT/bin"
 
     - mysql_user: name=backup password='' host=localhost priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
+
+  handlers:
+    - name: reload_systemd
+      command: systemctl daemon-reload
