@@ -1,6 +1,6 @@
 [Unit]
 Description=Eirka Post
-Requires=nginx.service mysql.service redis.service
+Wants=nginx.service mysql.service redis.service
 After=nginx.service mysql.service redis.service
 
 [Service]

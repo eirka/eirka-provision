@@ -5,10 +5,6 @@
   tasks:
     - copy: src=files/nginx-conf/ dest=/etc/nginx/conf.d/
       notify: nginx_restart
-    - copy: src=files/cloudflare.pem dest=/etc/nginx/ssl/cloudflare.pem
-      notify: nginx_restart
-    - command: openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -subj "/C=US/ST=New York/L=New York City/O=IT/CN={{ ansible_fqdn }}" -keyout /etc/nginx/ssl/nginx.key -out /etc/nginx/ssl/nginx.crt creates=/etc/nginx/ssl/nginx.crt
-      notify: nginx_restart
 
     - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-index creates=/data/pram/bin/eirka-index
     - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-get creates=/data/pram/bin/eirka-get

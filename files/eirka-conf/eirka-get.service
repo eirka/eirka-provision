@@ -1,7 +1,6 @@
 [Unit]
 Description=Eirka Get
-Wants=redis.service
-Requires=nginx.service mysql.service
+Wants=redis.service nginx.service mysql.service
 After=nginx.service mysql.service redis.service
 
 [Service]

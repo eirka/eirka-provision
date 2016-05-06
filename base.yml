@@ -13,7 +13,6 @@
 
     - file: path={{ item }} state=directory
       with_items:
-        - /etc/nginx/ssl
         - /etc/pram
         - /data/pram
         - /data/prim/src

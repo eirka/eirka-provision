@@ -1,6 +1,6 @@
 [Unit]
 Description=Eirka Index
-Requires=nginx.service mysql.service
+Wants=nginx.service mysql.service
 After=nginx.service mysql.service
 
 [Service]
