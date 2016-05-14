@@ -30,8 +30,9 @@
     - copy: src=files/redis.conf dest=/etc/redis/redis.conf
     - copy: src=files/nginx.conf dest=/etc/nginx/nginx.conf
     - copy: src=files/mysqld.cnf dest=/etc/mysql/percona-server.conf.d/mysqld.cnf
-    - copy: src=files/backup dest=/etc/cron.daily/backup
     - copy: src=files/prim/ dest=/data/prim/assets/includes/
+
+    - copy: src=files/backup dest=/etc/cron.daily/backup mode="a+x"
 
     - copy: src={{ item }} dest=/etc/systemd/system/
       with_items:
