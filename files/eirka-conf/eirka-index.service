@@ -15,7 +15,7 @@ RuntimeDirectory=eirka
 Environment=GIN_MODE=release
 ExecStart=/data/pram/bin/eirka-index
 ExecReload=/bin/kill -USR2 $MAINPID
-Restart=on-failure
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
