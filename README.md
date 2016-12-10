@@ -3,7 +3,7 @@ packer/ansible provisioning for eirka on ubuntu 16.04
 
 ##### Build image:
 
-    packer build eirka.json
+    packer build -var 'digitalocean_key=' eirka.json
 
 ##### Provision eirka on instance created from image:
 

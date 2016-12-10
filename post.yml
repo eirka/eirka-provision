@@ -20,6 +20,8 @@
 
     - mysql_user: name=pram password="{{ lookup('password', '/tmp/' + ansible_fqdn + '/db_password') }}" host=localhost priv="eirka.*:SELECT,INSERT,UPDATE,DELETE" state=present
 
+    - debug: msg="Database password is {{ lookup('password', '/tmp/' + ansible_fqdn + '/db_password') }}"
+
   handlers:
     - name: nginx_restart
       service: name=nginx state=restarted
