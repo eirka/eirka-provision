@@ -14,6 +14,7 @@ User=www-data
 RuntimeDirectory=eirka
 Environment=GIN_MODE=release
 ExecStart=/data/pram/bin/eirka-admin
+ExecStop=/bin/kill -TERM $MAINPID
 ExecReload=/bin/kill -USR2 $MAINPID
 Restart=always
 
