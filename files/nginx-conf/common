@@ -15,7 +15,7 @@ location = /favicon.ico { access_log off; log_not_found off; }
 location = /robots.txt { access_log off; log_not_found off; }
 location ~ /\. { deny all; access_log off; log_not_found off; }
 
-location ~* \.(?:ico|css|js|gif|jpe?g|png)$ {
+location ~* \.(?:ico|css|js|gif|jpe?g|png|webm)$ {
   expires 1y;
   access_log off;
 
