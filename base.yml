@@ -52,9 +52,9 @@
     - file: path=/root/go.tar.gz state=absent
 
     - get_url:
-        url: https://storage.googleapis.com/golang/go1.7.4.linux-amd64.tar.gz
+        url: https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz
         dest: /root/go.tar.gz
-        checksum: sha256:47fda42e46b4c3ec93fa5d4d4cc6a748aa3f9411a2a2b7e08e3a6d80d753ec8b
+        checksum: sha256:53ab94104ee3923e228a2cb2116e5e462ad3ebaeea06ff04463479d7f12d27ca
 
     - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
     - lineinfile: dest=/etc/environment state=present line="export GOROOT=/usr/local/go"
