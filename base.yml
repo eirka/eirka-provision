@@ -3,6 +3,21 @@
   remote_user: root
 
   tasks:
+    - timezone: name=UTC
+    
+    - apt: name={{ item }} state=latest update_cache=yes
+      with_items:
+        - ffmpeg
+        - nginx
+        - redis-server
+        - imagemagick
+        - git
+        - wget
+        - python-simplejson
+        - python-mysqldb
+        - percona-server-server
+        - percona-xtrabackup
+
     - user: name=www-data state=present
 
     - service: name={{ item }} state=started enabled=yes
