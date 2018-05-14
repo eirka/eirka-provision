@@ -13,9 +13,9 @@
         - imagemagick
         - git
         - wget
-        - python-simplejson
-        - python-mysqldb
-        - percona-server-server
+        - python3-simplejson
+        - python3-mysqldb
+        - mysql-server
         - percona-xtrabackup
 
     - user: name=www-data state=present
@@ -46,7 +46,7 @@
     - copy: src=files/limits.conf dest=/etc/security/limits.conf
     - copy: src=files/redis.conf dest=/etc/redis/redis.conf
     - copy: src=files/nginx.conf dest=/etc/nginx/nginx.conf
-    - copy: src=files/mysqld.cnf dest=/etc/mysql/percona-server.conf.d/mysqld.cnf
+    - copy: src=files/mysqld.cnf dest=/etc/mysql/mysql.conf.d/mysqld.cnf
     - copy: src=files/prim/ dest=/data/prim/assets/includes/
 
     - copy: src=files/backup dest=/etc/cron.daily/backup mode="a+x"
@@ -67,9 +67,9 @@
     - file: path=/root/go.tar.gz state=absent
 
     - get_url:
-        url: https://storage.googleapis.com/golang/go1.8.linux-amd64.tar.gz
+        url: https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
         dest: /root/go.tar.gz
-        checksum: sha256:53ab94104ee3923e228a2cb2116e5e462ad3ebaeea06ff04463479d7f12d27ca
+        checksum: sha256:4b677d698c65370afa33757b6954ade60347aaca310ea92a63ed717d7cb0c2ff
 
     - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
     - lineinfile: dest=/etc/environment state=present line="export GOROOT=/usr/local/go"

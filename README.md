@@ -1,5 +1,5 @@
 # eirka-provision
-packer/ansible provisioning for eirka on ubuntu 16.04
+Packer/Ansible provisioning for eirka on Ubuntu 18.04
 
 ##### Build image:
 
@@ -7,4 +7,4 @@ packer/ansible provisioning for eirka on ubuntu 16.04
 
 ##### Provision eirka on instance created from image:
 
-    ansible-playbook post.yml -i 10.0.0.1,
+    ansible-playbook post.yml -i 10.0.0.1, -e 'ansible_python_interpreter=/usr/bin/python3'  

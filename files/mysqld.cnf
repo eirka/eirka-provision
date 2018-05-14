@@ -9,6 +9,7 @@ pid-file                       = /var/run/mysqld/mysqld.pid
 bind-address                   = 127.0.0.1
 port                           = 3306
 performance-schema             = 0
+sql_mode                       = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
 # SAFETY #
 max-allowed-packet             = 16M
@@ -20,13 +21,12 @@ innodb                         = FORCE
 innodb-strict-mode             = 1
 
 # DATA STORAGE #
-basedir		                     = /usr
-datadir                        = /var/lib/percona-server
+basedir		                   = /usr
+datadir                        = /var/lib/mysql
 tmpdir                         = /tmp
 
 # BINARY LOGGING #
-log-bin                        = /var/lib/percona-server/mysql-bin
-expire-logs-days               = 7
+expire-logs-days               = 10
 sync-binlog                    = 1
 
 # CACHES AND LIMITS #
@@ -54,4 +54,4 @@ innodb-buffer-pool-instances   = 1
 log-error                      = /var/log/mysql/error.log
 log-queries-not-using-indexes  = 1
 slow-query-log                 = 1
-slow-query-log-file            = /var/lib/percona-server/mysql-slow.log
+slow-query-log-file            = /var/log/mysql/mysql-slow.log
