@@ -5,19 +5,11 @@
   tasks:
     - timezone: name=UTC
     
-    - apt: name={{ item }} state=latest update_cache=yes
-      with_items:
-        - ffmpeg
-        - nginx
-        - redis-server
-        - imagemagick
-        - git
-        - wget
-        - python3-simplejson
-        - python3-mysqldb
-        - mysql-server
-        - percona-xtrabackup
-
+    - apt:
+        name: ['ffmpeg', 'nginx', 'redis-server', 'imagemagick', 'git', 'wget', 'python3-simplejson', 'python3-mysqldb', 'mysql-server', 'percona-xtrabackup']
+        state: latest 
+        update_cache: yes
+  
     - user: name=www-data state=present
 
     - service: name={{ item }} state=started enabled=yes
@@ -67,13 +59,14 @@
     - file: path=/root/go.tar.gz state=absent
 
     - get_url:
-        url: https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
+        url: https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz
         dest: /root/go.tar.gz
-        checksum: sha256:4b677d698c65370afa33757b6954ade60347aaca310ea92a63ed717d7cb0c2ff
+        checksum: sha256:fb26c30e6a04ad937bbc657a1b5bba92f80096af1e8ee6da6430c045a8db3a5b
 
     - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
     - lineinfile: dest=/etc/environment state=present line="export GOROOT=/usr/local/go"
-    - lineinfile: dest=/etc/environment state=present line="export GOPATH=/data/pram/"
+    - lineinfile: dest=/etc/environment state=present line="export GOPATH=/data/pram"
+    - lineinfile: dest=/etc/environment state=present line="export GOBIN=/data/pram/bin"
     - lineinfile: dest=/root/.profile state=present line="export PATH=$PATH:$GOROOT/bin"
 
     - mysql_user: name=backup password='' host=localhost priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present

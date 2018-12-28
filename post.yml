@@ -6,10 +6,10 @@
     - copy: src=files/nginx-conf/ dest=/etc/nginx/conf.d/
       notify: nginx_restart
 
-    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-index creates=/data/pram/bin/eirka-index
-    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-get creates=/data/pram/bin/eirka-get
-    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-post creates=/data/pram/bin/eirka-post
-    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-admin creates=/data/pram/bin/eirka-admin
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-index
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-get
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-post
+    - shell: /usr/local/go/bin/go get -u github.com/eirka/eirka-admin
 
     - template: src=files/pram.conf.j2 dest=/etc/pram/pram.conf
 
