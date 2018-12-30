@@ -1,11 +1,14 @@
 #!/bin/bash
 # creates a mysql backup
 #
-# CREATE USER 'backups'@'localhost';
-# GRANT RELOAD, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'backups'@'localhost';
+# CREATE USER 'backup'@'localhost';
+# GRANT RELOAD, PROCESS, LOCK TABLES, REPLICATION CLIENT ON *.* TO 'backup'@'localhost';
 # FLUSH PRIVILEGES;
 #
-# restore: innobackupex --copy-back /data/backups/whatever
+# restore:
+# delete the mysql datadir and unzip your backup
+# run this command:
+# innobackupex --copy-back /data/backups/whatever
 
 # timestamp
 DATE=$(date +"%Y%m%d")

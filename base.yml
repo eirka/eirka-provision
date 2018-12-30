@@ -69,7 +69,7 @@
     - lineinfile: dest=/etc/environment state=present line="export GOBIN=/data/pram/bin"
     - lineinfile: dest=/root/.profile state=present line="export PATH=$PATH:$GOROOT/bin"
 
-    - mysql_user: name=backup password='' host=localhost priv="*.*:RELOAD,LOCK TABLES,REPLICATION CLIENT" state=present
+    - mysql_user: name=backup password='' host=localhost priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
 
   handlers:
     - name: reload_systemd
