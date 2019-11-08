@@ -64,6 +64,7 @@
         checksum: sha256:692d17071736f74be04a72a06dab9cac1cd759377bd85316e52b2227604c004c
 
     - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
+    
     - lineinfile: dest=/etc/environment state=present line="export GOROOT=/usr/local/go"
     - lineinfile: dest=/etc/environment state=present line="export GOPATH=/data/pram"
     - lineinfile: dest=/etc/environment state=present line="export GOBIN=/data/pram/bin"
