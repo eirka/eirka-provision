@@ -3,6 +3,9 @@
   remote_user: root
 
   tasks:
+    - openssl_dhparam: path=/etc/nginx/dhparam.pem
+      notify: nginx_restart
+
     - copy: src=files/nginx-conf/ dest=/etc/nginx/conf.d/
       notify: nginx_restart
 
