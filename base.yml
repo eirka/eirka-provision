@@ -59,9 +59,9 @@
     - file: path=/root/go.tar.gz state=absent
 
     - get_url:
-        url: https://dl.google.com/go/go1.11.4.linux-amd64.tar.gz
+        url: https://dl.google.com/go/go1.13.4.linux-amd64.tar.gz
         dest: /root/go.tar.gz
-        checksum: sha256:fb26c30e6a04ad937bbc657a1b5bba92f80096af1e8ee6da6430c045a8db3a5b
+        checksum: sha256:692d17071736f74be04a72a06dab9cac1cd759377bd85316e52b2227604c004c
 
     - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
     - lineinfile: dest=/etc/environment state=present line="export GOROOT=/usr/local/go"
