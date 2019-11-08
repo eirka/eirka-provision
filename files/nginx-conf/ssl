@@ -8,5 +8,8 @@ ssl_session_timeout  10m;
 ssl_session_cache shared:SSL:10m;
 ssl_session_tickets off;
 
+resolver 1.1.1.1 1.0.0.1 valid=300s;
+resolver_timeout 5s; 
+
 add_header X-Frame-Options DENY;
 add_header X-Content-Type-Options nosniff;
