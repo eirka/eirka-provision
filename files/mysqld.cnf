@@ -8,8 +8,8 @@ socket                         = /var/run/mysqld/mysqld.sock
 pid-file                       = /var/run/mysqld/mysqld.pid
 bind-address                   = 127.0.0.1
 port                           = 3306
-performance-schema             = 0
-sql_mode                       = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+performance-schema             = 1
+sql_mode                       = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
 
 # SAFETY #
 max-allowed-packet             = 16M
@@ -33,8 +33,6 @@ sync-binlog                    = 1
 key-buffer-size                = 32M
 tmp-table-size                 = 32M
 max-heap-table-size            = 32M
-query-cache-type               = 0
-query-cache-size               = 0
 max-connections                = 80
 thread-cache-size              = 16
 open-files-limit               = 65535
@@ -47,7 +45,7 @@ innodb-log-files-in-group      = 2
 innodb-log-file-size           = 128M
 innodb-flush-log-at-trx-commit = 1
 innodb-file-per-table          = 1
-innodb-buffer-pool-size        = 128M
+innodb-buffer-pool-size        = 1G
 innodb-buffer-pool-instances   = 1
 
 # LOGGING #
