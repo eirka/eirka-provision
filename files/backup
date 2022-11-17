@@ -8,7 +8,7 @@
 # restore:
 # delete the mysql datadir and unzip your backup
 # run this command:
-# innobackupex --copy-back /data/backups/whatever
+# xtrabackup --copy-back --target-dir=/data/backups/whatever
 
 # timestamp
 DATE=$(date +"%Y%m%d")
@@ -18,8 +18,8 @@ DIR="/data/backups/$DATE"
 TAR="/data/backups/backup-$DATE.tar.gz"
 
 set -eu
-innobackupex --user=backup --no-timestamp $DIR
-innobackupex --apply-log /data/backups/$DATE
+xtrabackup --backup --no-server-version-check --user=backup --target-dir=$DIR
+xtrabackup --prepare --target-dir=$DIR
 nice -n 10 tar -cvzf $TAR $DIR
 rm -rf $DIR
-find /data/backups -mtime +7 -delete
+find /data/backups -mtime +30 -delete

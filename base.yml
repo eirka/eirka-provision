@@ -4,12 +4,23 @@
 
   tasks:
     - timezone: name=UTC
-    
+
     - apt:
-        name: ['ffmpeg', 'nginx', 'redis-server', 'imagemagick', 'git', 'wget', 'python3-simplejson', 'python3-mysqldb', 'mysql-server', 'percona-xtrabackup']
-        state: latest 
+        name:
+          [
+            "ffmpeg",
+            "nginx",
+            "redis-server",
+            "imagemagick",
+            "git",
+            "wget",
+            "python3-simplejson",
+            "python3-mysqldb",
+            "mysql-server",
+          ]
+        state: latest
         update_cache: yes
-  
+
     - user: name=www-data state=present
 
     - service: name={{ item }} state=started enabled=yes
@@ -54,7 +65,7 @@
     - ufw: rule=limit name="OpenSSH"
     - ufw: rule=allow name="Nginx Full"
     - ufw: state=enabled
-    
+
     - lineinfile: dest=/etc/environment state=present line="export GOROOT=/usr/local/go"
     - lineinfile: dest=/etc/environment state=present line="export GOPATH=/data/pram"
     - lineinfile: dest=/etc/environment state=present line="export GOBIN=/data/pram/bin"
@@ -70,7 +81,7 @@
 
     - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
 
-    - mysql_user: name=backup password='' host=localhost priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT" state=present
+    - mysql_user: name=backup password='' host=localhost priv="*.*:RELOAD,PROCESS,LOCK TABLES,REPLICATION CLIENT/performance_schema.*:SELECT" state=present
 
   handlers:
     - name: reload_systemd
