@@ -75,9 +75,9 @@
     - file: path=/root/go.tar.gz state=absent
 
     - get_url:
-        url: https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
+        url: https://go.dev/dl/go1.23.6.linux-amd64.tar.gz
         dest: /root/go.tar.gz
-        checksum: sha256:b945ae2bb5db01a0fb4786afde64e6fbab50b67f6fa0eb6cfa4924f16a7ff1eb
+        checksum: sha256:9379441ea310de000f33a4dc767bd966e72ab2826270e038e78b2c53c2e7802d
 
     - unarchive: src=/root/go.tar.gz dest=/usr/local copy=no
 

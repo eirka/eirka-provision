@@ -18,8 +18,8 @@ DIR="/data/backups/$DATE"
 TAR="/data/backups/backup-$DATE.tar.gz"
 
 set -eu
-xtrabackup --backup --no-server-version-check --user=backup --target-dir=$DIR
-xtrabackup --prepare --target-dir=$DIR
-nice -n 10 tar -cvzf $TAR $DIR
-rm -rf $DIR
+xtrabackup --backup --no-server-version-check --user=backup --target-dir="$DIR"
+xtrabackup --prepare --target-dir="$DIR"
+nice -n 10 tar -cvzf "$TAR" "$DIR"
+rm -rf "$DIR"
 find /data/backups -mtime +30 -delete
