@@ -6,13 +6,21 @@ After=nginx.service mysql.service redis.service
 [Service]
 PrivateTmp=yes
 ProtectHome=yes
-ProtectSystem=full
+ProtectSystem=strict
+NoNewPrivileges=true
+PrivateDevices=true
+MemoryDenyWriteExecute=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+
+ConfigurationDirectory=pram::ro
+RuntimeDirectory=eirka
 
 PIDFile=/run/eirka/eirka-get.pid
 
 User=www-data
-RuntimeDirectory=eirka
 Environment=GIN_MODE=release
+
 ExecStart=/data/pram/bin/eirka-get
 ExecStop=/bin/kill -TERM $MAINPID
 ExecReload=/bin/kill -USR2 $MAINPID
